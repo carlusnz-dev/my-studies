@@ -110,8 +110,8 @@ export default function Clock({
     };
 
     return (
-        <div className="my-12 rounded-2xl">
-            <span className="text-[12em] font-black font-mono">
+        <div className="my-6 w-full flex justify-center">
+            <span className="text-[7.5em] sm:text-[12em] font-black font-mono">
                 {formatTime(timeLeft)}
             </span>
         </div>

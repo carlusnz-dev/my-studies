@@ -2,20 +2,20 @@ import Link from 'next/link';
 
 export default function NavDashboard() {
     return (
-        <div className="relative">
-            <h1 className="text-4xl font-bold">Menu</h1>
+        <nav>
+            <h1 className="text-4xl font-bold mb-8">Menu</h1>
 
-            <div className="flex flex-col gap-5 my-8">
-                <Link href="/" className="text-2xl font-mono">
+            <div className="flex flex-col gap-5 text-lg">
+                <Link href="/" className="font-mono hover:underline">
                     Relógio
                 </Link>
-                <Link href="/dashboard" className="text-2xl font-mono">
+                <Link href="/dashboard" className="font-mono hover:underline">
                     Dashboard
                 </Link>
-                <Link href="/about" className="text-2xl font-mono">
+                <Link href="/about" className="font-mono hover:underline">
                     Sobre
                 </Link>
             </div>
-        </div>
+        </nav>
     );
 }

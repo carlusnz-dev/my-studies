@@ -29,7 +29,7 @@ export default function DashboardPage() {
         if (!loading && !user) {
             router.push('/login');
         }
-    }, [user, loading]);
+    }, [user, loading, router]);
 
     useEffect(() => {
         const fetchHistory = async () => {
@@ -61,7 +61,7 @@ export default function DashboardPage() {
     const totalSeconds = history.reduce((sum, h) => sum + h.seconds, 0);
     const totalMinutes = Math.floor(totalSeconds / 60);
     const totalHours = Math.floor(totalMinutes / 60);
-    const minutes = totalHours % 60;
+    const minutes = totalMinutes % 60;
 
     const today = getTodayDate();
     const todaySeconds = history.find((h) => h.date === today)?.seconds || 0;
@@ -75,40 +75,42 @@ export default function DashboardPage() {
     if (loading || !user) return null;
 
     return (
-        <div className="min-h-screen flex p-5 gap-5">
-            <div className="relative flex-1/4 bg-neutral-800 p-8 rounded-2xl">
+        <div className="min-h-screen flex flex-col md:flex-row p-5 gap-5 bg-neutral-900 text-white">
+            <aside className="md:flex-1 max-w-full md:max-w-xs bg-neutral-800 p-6 rounded-2xl relative">
                 <NavDashboard />
-                <p className="text-lg font-black font-mono">Logado como: {user.email}</p>
+                <p className="text-lg font-black font-mono mt-8 truncate">
+                    Logado como: {user.email}
+                </p>
 
                 <button
-                    className="absolute bottom-0 -translate-y-4 py-3 px-12 bg-red-500 text-white rounded-lg cursor-pointer hover:bg-red-700"
+                    className="absolute bottom-6 left-6 right-6 py-3 bg-red-500 text-white rounded-lg cursor-pointer hover:bg-red-700 transition"
                     onClick={logout}
                 >
                     Sair
                 </button>
-            </div>
+            </aside>
 
             {/* Dashboard */}
-            <div className="flex-3/4 p-10 bg-neutral-900 text-white rounded-2xl">
-                <h1 className="text-3xl font-bold mb-6">
+            <main className="md:flex-3/4 p-6 md:p-10 bg-neutral-800 rounded-2xl flex flex-col">
+                <h1 className="text-3xl font-bold mb-6 text-center md:text-left">
                     Dashboard de Estudos
                 </h1>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                    <div className="bg-neutral-800 p-6 rounded-lg shadow text-center">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                    <div className="bg-neutral-700 p-6 rounded-lg shadow text-center">
                         <p className="text-lg text-gray-400">Tempo total</p>
                         <p className="text-3xl font-bold">
                             {totalHours}h e {minutes} min
                         </p>
                     </div>
-                    <div className="bg-neutral-800 p-6 rounded-lg shadow text-center">
+                    <div className="bg-neutral-700 p-6 rounded-lg shadow text-center">
                         <p className="text-lg text-gray-400">Hoje</p>
                         <p className="text-3xl font-bold">
                             {Math.floor(todayMinutes / 60)}h e{' '}
                             {todayMinutes % 60} min
                         </p>
                     </div>
-                    <div className="bg-neutral-800 p-6 rounded-lg shadow text-center">
+                    <div className="bg-neutral-700 p-6 rounded-lg shadow text-center">
                         <p className="text-lg text-gray-400">
                             Dias registrados
                         </p>
@@ -116,7 +118,7 @@ export default function DashboardPage() {
                     </div>
                 </div>
 
-                <div className="bg-neutral-800 p-6 rounded-lg shadow">
+                <section className="bg-neutral-700 p-6 rounded-lg shadow flex-grow">
                     <h2 className="text-xl font-semibold mb-4">
                         Últimos 7 dias
                     </h2>
@@ -134,8 +136,8 @@ export default function DashboardPage() {
                             />
                         </LineChart>
                     </ResponsiveContainer>
-                </div>
-            </div>
+                </section>
+            </main>
         </div>
     );
 }
